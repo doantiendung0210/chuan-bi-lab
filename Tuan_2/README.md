@@ -68,7 +68,7 @@ Một pipeline học máy có giám sát tiêu chuẩn gồm 7 bước chính:
 | Tiêu chí | Clustering (Gom nhóm) | Dimensionality Reduction (Giảm chiều) |
 | :--- | :--- | :--- |
 | **Mục tiêu chính** | Nhóm các **mẫu dữ liệu (mẫu / dòng)** có đặc trưng giống nhau lại với nhau. | Tóm tắt/nén các **đặc trưng (features / cột)** của dữ liệu thành ít thuộc tính hơn. |
-| **Đầu ra mong muốn** | Nhãn cụm (cluster IDs) đại diện cho từng phân nhóm dữ liệu. | Một không gian không gian thuộc tính mới có số chiều thấp hơn ($k < d$). |
+| **Đầu ra mong muốn** | Nhãn cụm (cluster IDs) đại diện cho từng phân nhóm dữ liệu. | Một không gian thuộc tính mới có số chiều thấp hơn ($k < d$). |
 | **Thuật toán tiêu biểu** | K-Means, DBSCAN, Hierarchical Clustering. | PCA, t-SNE, UMAP. |
 
 ---
