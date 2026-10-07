@@ -28,7 +28,7 @@ Một pipeline học máy có giám sát tiêu chuẩn gồm 7 bước chính:
 4. **Huấn luyện mô hình (Model Training):** Đưa dữ liệu tập Train vào các thuật toán để mô hình học các biểu diễn và trọng số thích hợp.
 5. **Đánh giá mô hình (Model Evaluation):** Sử dụng tập Test/Validation với các thước đo (metrics) phù hợp:
    - Bài toán Classification: *Accuracy, Precision, Recall, F1-score, Confusion Matrix, ROC-AUC*.
-   - Bài toán Regression: *MAE (Mean Absolute Error), MSE (Mean Squared Error), RMSE, $R^2$ Score*.
+   - Bài toán Regression: *MAE (Mean Absolute Error), MSE (Mean Squared Error), RMSE.
 6. **Tối ưu hóa (Hyperparameter Tuning):** Tinh chỉnh các siêu tham số của mô hình (bằng *GridSearchCV*, *RandomizedSearchCV*, hoặc *Bayesian Optimization*) để đạt hiệu năng cao nhất và tránh hiện tượng Overfitting/Underfitting.
 7. **Triển khai và giám sát (Deployment & Monitoring):** Tích hợp mô hình vào môi trường thực tế (API/Web) và liên tục giám sát độ chính xác theo thời gian thực.
 
@@ -68,7 +68,7 @@ Một pipeline học máy có giám sát tiêu chuẩn gồm 7 bước chính:
 | Tiêu chí | Clustering (Gom nhóm) | Dimensionality Reduction (Giảm chiều) |
 | :--- | :--- | :--- |
 | **Mục tiêu chính** | Nhóm các **mẫu dữ liệu (mẫu / dòng)** có đặc trưng giống nhau lại với nhau. | Tóm tắt/nén các **đặc trưng (features / cột)** của dữ liệu thành ít thuộc tính hơn. |
-| **Đầu ra mong muốn** | Nhãn cụm (cluster IDs) đại diện cho từng phân nhóm dữ liệu. | Một không gian không gian thuộc tính mới có số chiều thấp hơn ($k < d$). |
+| **Đầu ra mong muốn** | Nhãn cụm (cluster IDs) đại diện cho từng phân nhóm dữ liệu. | Một không gian thuộc tính mới có số chiều thấp hơn ($k < d$). |
 | **Thuật toán tiêu biểu** | K-Means, DBSCAN, Hierarchical Clustering. | PCA, t-SNE, UMAP. |
 
 ---
