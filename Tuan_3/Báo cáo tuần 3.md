@@ -106,15 +106,26 @@ Trong thực tế, các nền tảng lớn thường sử dụng **hệ thống 
 
 **Ví dụ:** Một hệ thống dự đoán khách hàng có nguy cơ rời bỏ dịch vụ được huấn luyện từ dữ liệu lịch sử, triển khai qua API, theo dõi kết quả hằng tuần và huấn luyện lại khi hành vi khách hàng thay đổi.
 
-## 6. Kết luận
+## 6. So sánh Collaborative Filtering và Content-Based Filtering
 
-Các chủ đề trên giải quyết những vấn đề khác nhau trong Machine Learning: **Ensemble Learning** nâng cao chất lượng dự đoán; **Semi-Supervised Learning** tận dụng dữ liệu thiếu nhãn; **PGM** mô hình hóa quan hệ xác suất; **Recommendation Systems** cá nhân hóa trải nghiệm; và **MLOps** giúp vận hành mô hình ổn định, có thể cập nhật trong thực tế.
+| Tiêu chí | Collaborative Filtering (SVD) | Content-Based Filtering (TF-IDF + Cosine Similarity) |
+|---|---|---|
+| Nguyên lý | Dự đoán sở thích dựa trên lịch sử đánh giá của người dùng | Gợi ý phim có nội dung tương tự phim đã chọn |
+| Dữ liệu sử dụng | `ratings.csv` (userId, movieId, rating) | `movies.csv` (movieId, title, genres) |
+| Phương pháp | SVD (Matrix Factorization) | TF-IDF và Cosine Similarity |
+| Cá nhân hóa | Cao, dựa trên lịch sử rating của từng người dùng | Thấp nếu chỉ xét độ tương đồng thể loại giữa các phim |
+| Ưu điểm | Khám phá được sở thích tiềm ẩn, không cần thông tin thể loại | Đơn giản, dễ giải thích, không cần dữ liệu rating |
+| Nhược điểm | Khó xử lý người dùng/phim mới chưa có rating | Phụ thuộc vào thông tin thể loại, khó đề xuất phim khác thể loại |
+| Cold Start | Khó gợi ý cho người dùng/phim mới | Có thể gợi ý phim mới nếu có thông tin thể loại |
+| Phương pháp thực nghiệm | Chia tập rating thành train/test, huấn luyện SVD và dự đoán rating trên tập test | Vector hóa genres bằng TF-IDF, tính Cosine Similarity và lấy Top-N phim tương tự |
+| Chỉ số đánh giá | RMSE, MAE (có thể thêm Precision@K, Recall@K) | Cosine Similarity; có thể đánh giá Precision@K, Recall@K nếu thiết kế kiểm thử phù hợp |
+| Kết quả đầu ra | Rating dự đoán hoặc Top-N phim cho một người dùng | Top-N phim tương tự một phim đầu vào |
+| Khả năng so sánh trực tiếp | Cần xây dựng cùng bài toán Top-N recommendation | Cần tạo hồ sơ sở thích người dùng từ các phim đã đánh giá để so sánh công bằng |
 
-## Tài liệu tham khảo
+### Phương pháp thực nghiệm so sánh
 
-1. Scikit-learn User Guide – Ensemble Methods: https://scikit-learn.org/stable/modules/ensemble.html
-2. Scikit-learn User Guide – Semi-supervised Learning: https://scikit-learn.org/stable/modules/semi_supervised.html
-3. Koller, D. & Friedman, N. (2009), *Probabilistic Graphical Models: Principles and Techniques*, MIT Press.
-4. Google Developers – Recommendation Systems: https://developers.google.com/machine-learning/recommendation
-5. Google Cloud – MLOps: Continuous Delivery and Automation Pipelines in Machine Learning: https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning
-6. MLflow Documentation: https://mlflow.org/docs/latest/index.html
+1. **Collaborative Filtering:** Chia dữ liệu rating thành train/test, huấn luyện SVD và đánh giá bằng RMSE, MAE.
+2. **Content-Based Filtering:** Sử dụng TF-IDF để biểu diễn thể loại phim, sau đó tính Cosine Similarity để tìm Top-N phim tương tự.
+3. **So sánh định tính:** Đánh giá khả năng cá nhân hóa, xử lý Cold Start, ưu điểm và hạn chế của hai phương pháp.
+4. **So sánh định lượng (nếu thực hiện):** Xây dựng gợi ý Top-K cho cùng người dùng, sử dụng cùng tập test và đánh giá Precision@K, Recall@K.
+
