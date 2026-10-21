@@ -181,15 +181,8 @@ Các bước thực hiện:
 
 **Kết quả lần chạy mới nhất:** `max_depth = 3`, `n_estimators = 100`, Accuracy = **80.45%**. Các lần chạy trước có Accuracy khoảng 81.56% nhưng chưa thiết lập rõ `max_depth`.
 
-**Ảnh log tracking:**
-
-![Bảng log tracking MLflow](mlflow_result.png)
-
 ### 7.4. Kết luận
 MLflow giúp lưu lại tham số và kết quả huấn luyện, từ đó dễ dàng theo dõi, so sánh và cải thiện mô hình.
-
-
-
 
 ## 8. Lasso và Ridge (L1, L2)
 
