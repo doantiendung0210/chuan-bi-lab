@@ -153,3 +153,36 @@ Nhìn chung, Collaborative Filtering phù hợp với bài toán cá nhân hóa 
 Hai phương pháp có thể bổ sung cho nhau trong một hệ thống gợi ý kết hợp (Hybrid Recommendation System).
 
 
+## 7. Tìm hiểu về MLflow
+
+### 7.1. MLflow là gì?
+MLflow là công cụ mã nguồn mở giúp quản lý và theo dõi quá trình phát triển mô hình Machine Learning.
+
+MLflow thuộc lĩnh vực MLOps, giúp việc huấn luyện, đánh giá và quản lý mô hình thuận tiện hơn.
+
+### 7.2. Chức năng chính
+- **Experiment Tracking:** Lưu các lần huấn luyện và kết quả đánh giá.
+- **Parameters:** Lưu siêu tham số của mô hình như `max_depth`, `n_estimators`.
+- **Metrics:** Lưu các chỉ số đánh giá như Accuracy, Precision, Recall.
+- **Model Registry:** Quản lý các phiên bản mô hình.
+- **MLflow UI:** Giao diện xem và so sánh các lần huấn luyện.
+
+### 7.3. Ứng dụng trong bài thực hành
+Sử dụng MLflow để theo dõi mô hình XGBoost trên bộ dữ liệu Titanic.
+
+Các bước thực hiện:
+1. Cài đặt thư viện `mlflow`.
+2. Tạo experiment bằng `mlflow.set_experiment()`.
+3. Bắt đầu tracking bằng `mlflow.start_run()`.
+4. Huấn luyện mô hình XGBoost.
+5. Lưu tham số bằng `mlflow.log_params()`.
+6. Lưu Accuracy bằng `mlflow.log_metric()`.
+7. Xem kết quả bằng MLflow UI.
+
+**Kết quả:** Mô hình đạt Accuracy khoảng 81.56%.
+
+### 7.4. Kết luận
+MLflow giúp lưu lại tham số và kết quả huấn luyện, từ đó dễ dàng theo dõi, so sánh và cải thiện mô hình.
+
+
+
