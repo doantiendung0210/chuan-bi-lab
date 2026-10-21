@@ -106,26 +106,50 @@ Trong thực tế, các nền tảng lớn thường sử dụng **hệ thống 
 
 **Ví dụ:** Một hệ thống dự đoán khách hàng có nguy cơ rời bỏ dịch vụ được huấn luyện từ dữ liệu lịch sử, triển khai qua API, theo dõi kết quả hằng tuần và huấn luyện lại khi hành vi khách hàng thay đổi.
 
-## 6. So sánh Collaborative Filtering và Content-Based Filtering
+## 6. Kết quả thực nghiệm và nhận xét
 
-| Tiêu chí | Collaborative Filtering (SVD) | Content-Based Filtering (TF-IDF + Cosine Similarity) |
+### 6.1. So sánh các mô hình Collaborative Filtering
+
+| Chỉ số đánh giá | SVD | KNN |
 |---|---|---|
-| Nguyên lý | Dự đoán sở thích dựa trên lịch sử đánh giá của người dùng | Gợi ý phim có nội dung tương tự phim đã chọn |
-| Dữ liệu sử dụng | `ratings.csv` (userId, movieId, rating) | `movies.csv` (movieId, title, genres) |
+| RMSE | **0.8807** | 0.9800 |
+| MAE | **0.6766** | 0.7615 |
+| Precision | **0.8095** | 0.7576 |
+| Recall | **0.3287** | 0.2427 |
+
+**Nhận xét:**
+
+- **RMSE và MAE:** SVD có sai số dự đoán thấp hơn KNN, cho thấy khả năng dự đoán rating chính xác hơn.
+- **Precision:** SVD đạt 0.8095, cao hơn KNN (0.7576), cho thấy tỷ lệ dự đoán tích cực chính xác cao hơn.
+- **Recall:** SVD đạt 0.3287, cao hơn KNN (0.2427). Tuy nhiên, Recall của cả hai mô hình còn khá thấp, cho thấy vẫn bỏ sót nhiều lượt đánh giá tích cực.
+- **Kết luận:** SVD cho kết quả tốt hơn KNN trên cả bốn chỉ số đánh giá trong thực nghiệm này.
+
+### 6.2. So sánh với Content-Based Filtering (TF-IDF + Cosine Similarity)
+
+| Tiêu chí | Collaborative Filtering (SVD) | Content-Based Filtering (TF-IDF) |
+|---|---|---|
+| Dữ liệu sử dụng | Lịch sử đánh giá của người dùng | Thể loại phim (genres) |
 | Phương pháp | SVD (Matrix Factorization) | TF-IDF và Cosine Similarity |
-| Cá nhân hóa | Cao, dựa trên lịch sử rating của từng người dùng | Thấp nếu chỉ xét độ tương đồng thể loại giữa các phim |
-| Ưu điểm | Khám phá được sở thích tiềm ẩn, không cần thông tin thể loại | Đơn giản, dễ giải thích, không cần dữ liệu rating |
-| Nhược điểm | Khó xử lý người dùng/phim mới chưa có rating | Phụ thuộc vào thông tin thể loại, khó đề xuất phim khác thể loại |
-| Cold Start | Khó gợi ý cho người dùng/phim mới | Có thể gợi ý phim mới nếu có thông tin thể loại |
-| Phương pháp thực nghiệm | Chia tập rating thành train/test, huấn luyện SVD và dự đoán rating trên tập test | Vector hóa genres bằng TF-IDF, tính Cosine Similarity và lấy Top-N phim tương tự |
-| Chỉ số đánh giá | RMSE, MAE (có thể thêm Precision@K, Recall@K) | Cosine Similarity; có thể đánh giá Precision@K, Recall@K nếu thiết kế kiểm thử phù hợp |
-| Kết quả đầu ra | Rating dự đoán hoặc Top-N phim cho một người dùng | Top-N phim tương tự một phim đầu vào |
-| Khả năng so sánh trực tiếp | Cần xây dựng cùng bài toán Top-N recommendation | Cần tạo hồ sơ sở thích người dùng từ các phim đã đánh giá để so sánh công bằng |
+| Nguyên lý | Dự đoán rating dựa trên sở thích tiềm ẩn của người dùng | Tìm các phim có thể loại tương đồng |
+| Cá nhân hóa | Cao, dựa trên lịch sử rating | Chưa cá nhân hóa theo người dùng trong cách triển khai hiện tại |
+| Kết quả thực nghiệm | RMSE = 0.8807; MAE = 0.6766 | Đã tính ma trận Cosine Similarity |
+| Ưu điểm | Khả năng cá nhân hóa tốt | Đơn giản, dễ giải thích, không cần rating |
+| Hạn chế | Phụ thuộc vào dữ liệu rating | Phụ thuộc vào thông tin thể loại phim |
 
-### Phương pháp thực nghiệm so sánh
+**Nhận xét:**
 
-1. **Collaborative Filtering:** Chia dữ liệu rating thành train/test, huấn luyện SVD và đánh giá bằng RMSE, MAE.
-2. **Content-Based Filtering:** Sử dụng TF-IDF để biểu diễn thể loại phim, sau đó tính Cosine Similarity để tìm Top-N phim tương tự.
-3. **So sánh định tính:** Đánh giá khả năng cá nhân hóa, xử lý Cold Start, ưu điểm và hạn chế của hai phương pháp.
-4. **So sánh định lượng (nếu thực hiện):** Xây dựng gợi ý Top-K cho cùng người dùng, sử dụng cùng tập test và đánh giá Precision@K, Recall@K.
+- **Collaborative Filtering (SVD):** Khai thác lịch sử đánh giá của người dùng để dự đoán mức độ yêu thích đối với các bộ phim. Mô hình cho kết quả dự đoán tương đối tốt với RMSE = 0.8807 và MAE = 0.6766.
+- **Content-Based Filtering (TF-IDF):** Sử dụng thông tin thể loại phim để tính toán độ tương đồng, từ đó xác định những bộ phim có nội dung tương tự. Phương pháp này không cần lịch sử đánh giá nhưng có thể hạn chế tính đa dạng của gợi ý.
+- **So sánh thực nghiệm:** SVD được đánh giá bằng RMSE, MAE, Precision và Recall, trong khi TF-IDF mới được sử dụng để tính độ tương đồng. Do hai phương pháp chưa được đánh giá trên cùng một tiêu chí nên chưa thể kết luận phương pháp nào tốt hơn về chất lượng gợi ý.
+
+### 6.3. Kết luận chung
+
+Qua quá trình thực nghiệm, mô hình SVD cho kết quả tốt hơn KNN trong bài toán dự đoán rating, với sai số thấp hơn và Precision, Recall cao hơn.
+
+Đối với Content-Based Filtering, TF-IDF kết hợp Cosine Similarity cho phép xác định mức độ tương đồng giữa các bộ phim dựa trên thể loại mà không cần dữ liệu đánh giá.
+
+Nhìn chung, Collaborative Filtering phù hợp với bài toán cá nhân hóa đề xuất phim dựa trên lịch sử người dùng, trong khi Content-Based Filtering phù hợp với việc tìm kiếm các bộ phim tương tự dựa trên đặc trưng nội dung.
+
+Hai phương pháp có thể bổ sung cho nhau trong một hệ thống gợi ý kết hợp (Hybrid Recommendation System).
+
 
